@@ -368,10 +368,36 @@ require('telescope').setup {
     },
   },
   pickers = {
-    find_files = {
-      theme = "dropdown",
-    }
-  },
+
+    current_buffer_tags = { fname_width = 100, },
+
+    jumplist = { fname_width = 100, },
+
+    loclist = { fname_width = 100, },
+
+    lsp_definitions = { fname_width = 100, },
+
+    lsp_document_symbols = { fname_width = 100, },
+
+    lsp_dynamic_workspace_symbols = { fname_width = 100, },
+
+    lsp_implementations = { fname_width = 100, },
+
+    lsp_incoming_calls = { fname_width = 100, },
+
+    lsp_outgoing_calls = { fname_width = 100, },
+
+    lsp_references = { fname_width = 100, },
+
+    lsp_type_definitions = { fname_width = 100, },
+
+    lsp_workspace_symbols = { fname_width = 100, },
+
+    quickfix = { fname_width = 100, },
+
+    tags = { fname_width = 100, },
+
+  }
 }
 
 -- Enable telescope fzf native, if installed
