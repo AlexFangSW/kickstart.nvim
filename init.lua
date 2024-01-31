@@ -1,10 +1,9 @@
 --[[
-
-- see telescope keymaps
-- use lazygit
+- [ok] see telescope keymaps
+- [ok] use lazygit
   - [ok] preserve line changes of previous git plugin
 - [ok] retain old yank after past
-- file tree/ or just use netrw
+- [ok] file tree/ or just use netrw
 - [ok] highlight search, clear on esc esc
 - [ok] python linting + yapf formatting on Save
 - [ok] catppuccine style
@@ -54,6 +53,10 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- disable netrw for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -176,10 +179,10 @@ require('lazy').setup({
     'numToStr/Comment.nvim',
     opts = {
       toggler = {
-        line = 'cm'
+        line = '<C-\\>'
       },
       opleader = {
-        line = 'cm'
+        line = '<C-\\>'
       }
     }
   },
@@ -222,7 +225,17 @@ require('lazy').setup({
       }
     end,
   },
-
+  -- call lazyvim in nvim
+  {
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  {
+    "nvim-tree/nvim-tree.lua"
+  },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -256,13 +269,17 @@ vim.o.hlsearch = true
 -- Make line numbers default
 vim.wo.number = true
 
+-- relative line numbers
+vim.wo.relativenumber = true
+
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
+--  If you see 'no clipboard tool found' in :checkhealth, you might need to install 'xclip' first
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+vim.opt.clipboard = "unnamedplus"
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -293,8 +310,12 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
--- open netrw
-vim.keymap.set("n", "<C-b>", vim.cmd.Ex)
+-- horizontal move
+vim.keymap.set("n", "<C-l>", "zL")
+vim.keymap.set("n", "<C-h>", "zH")
+
+-- toggle nvim tree
+vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>")
 
 -- clear highlight
 vim.keymap.set("n", "<esc><esc>", ":nohl<CR>")
@@ -331,6 +352,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- [[ Configure nvim-tree ]]
+require("nvim-tree").setup()
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -418,7 +442,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'go', 'lua', 'python', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
