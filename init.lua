@@ -1,12 +1,6 @@
 --[[
-- [ok] see telescope keymaps
-- [ok] use lazygit/
+
 - git fugitive ?
-- [ok] preserve line changes of previous git plugin
-- [ok] retain old yank after past [ok] file tree/ or just use netrw
-- [ok] highlight search, clear on esc esc
-- [ok] python linting + yapf formatting on Save
-- [ok] catppuccine style
 
 - clear all unassecery stuff after you finish~~
 
@@ -230,6 +224,12 @@ require('lazy').setup({
     {
         "nvim-tree/nvim-tree.lua"
     },
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        ft = { "markdown" },
+        build = function() vim.fn["mkdp#util#install"]() end,
+    },
     -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
     --       These are some example plugins that I've included in the kickstart repository.
     --       Uncomment any of the lines below to enable them.
@@ -248,10 +248,16 @@ require('lazy').setup({
 -- [[ set commands ]]
 
 -- set colorchem
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme("catppuccin")
 
--- format on save [python]
-vim.cmd [[autocmd BufWritePre *.py :Yapf]]
+-- [[ Python settings ]]
+-- format on save
+vim.cmd([[autocmd BufWritePre *.py :Yapf]])
+-- indentation
+local function python_indent()
+    return [[:setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab"]]
+end
+vim.cmd([[autocmd BufRead,BufNewFile *.py ]] .. python_indent())
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -318,6 +324,9 @@ vim.keymap.set("n", '<M-j>', ":resize -2<CR>")
 vim.keymap.set("n", '<M-l>', ":vertical resize +10<CR>")
 vim.keymap.set("n", '<M-h>', ":vertical resize -10<CR>")
 
+-- MarkdownPreview
+vim.keymap.set("n", "<leader>p", ":MarkdownPreviewToggle<CR>", { desc = "Toggle MarkdownPreview" })
+
 -- horizontal move
 vim.keymap.set("n", "<C-l>", "zL")
 vim.keymap.set("n", "<C-h>", "zH")
@@ -341,8 +350,8 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'k', "", { expr = true, silent = true })
+-- vim.keymap.set('n', 'j', "", { expr = true, silent = true })
 
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
