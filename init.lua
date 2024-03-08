@@ -264,6 +264,8 @@ vim.cmd([[autocmd BufRead,BufNewFile *.py ]] .. python_indent())
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+vim.opt.guicursor = "n-v-c-i:block-Cursor"
+
 vim.opt.wrap = false
 
 -- Set highlight on search
