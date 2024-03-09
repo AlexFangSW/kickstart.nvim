@@ -318,8 +318,18 @@ vim.cmd([[autocmd BufRead,BufNewFile *.py ]] .. python_indent())
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
+-- Set cursor style
 vim.opt.guicursor = "n-v-c-i:block-Cursor"
 
+-- Set fold
+-- Use za to toggle fold
+vim.opt.foldenable = false
+vim.opt.foldlevel = 99
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+
+-- Set no wrap
 vim.opt.wrap = false
 
 -- Set highlight on search
