@@ -364,6 +364,18 @@ vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
+-- [[
+-- If you want to find and replace multiple files:
+-- This will open all matched files in nvim buffer.
+-- nvim `find . -name '*.txt' -exec grep -le 'Alex' {} +`
+-- -l lists all matched filename
+-- -e means regex
+-- Then you can use 'bufdo <command>' to replace words in all buffers
+-- Ex: bufdo %s/Alex/Grace/gc
+-- It's like replacing word in file, but on all buffers
+-- Remamber to 'bufdo w' to save changes on all files
+-- ]]
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
