@@ -115,6 +115,13 @@ require('lazy').setup({
         }
     },
     {
+        -- better fold
+        'anuvyklack/pretty-fold.nvim',
+        config = function()
+            require('pretty-fold').setup({})
+        end
+    },
+    {
         -- Git commit graph
         "rbong/vim-flog",
         lazy = true,
@@ -160,6 +167,7 @@ require('lazy').setup({
     },
 
     -- [[ Colorschemes ]]
+    "sainnhe/gruvbox-material",
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -311,7 +319,9 @@ require('lazy').setup({
 -- [[ set commands ]]
 
 -- set colorchem
-vim.cmd.colorscheme("catppuccin")
+vim.g.gruvbox_material_background = 'soft'
+vim.g.gruvbox_material_better_performance = 1
+vim.cmd.colorscheme("gruvbox-material")
 
 -- [[ Python settings ]]
 -- autoformat is done by Conform
