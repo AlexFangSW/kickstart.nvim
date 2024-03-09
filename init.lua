@@ -180,7 +180,11 @@ require('lazy').setup({
             },
         },
     },
-
+    {
+        -- Autoformat
+        'stevearc/conform.nvim',
+        opts = {},
+    },
     {
         -- Add indentation guides even on blank lines
         'lukas-reineke/indent-blankline.nvim',
@@ -231,15 +235,6 @@ require('lazy').setup({
             'nvim-treesitter/nvim-treesitter-textobjects',
         },
         build = ':TSUpdate',
-    },
-    {
-        'amirali/yapf.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('yapf').setup {
-                style = '{based_on_style: google, indent_width: 4}'
-            }
-        end,
     },
     {
         "nvim-neo-tree/neo-tree.nvim",
@@ -312,9 +307,7 @@ require('lazy').setup({
 vim.cmd.colorscheme("catppuccin")
 
 -- [[ Python settings ]]
--- format on save
-vim.cmd([[autocmd BufWritePre *.py :Yapf]])
-
+-- autoformat is done by Conform
 -- indentation
 local function python_indent()
     return [[:setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab"]]
@@ -458,6 +451,34 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     group = highlight_group,
     pattern = '*',
 })
+
+-- [[ Configure Conform (autoformat)]]
+local conform = require("conform")
+conform.setup({
+    format_on_save = {
+        -- These options will be passed to conform.format()
+        timeout_ms = 500,
+        lsp_fallback = true,
+    },
+    formatters_by_ft = {
+        -- lua = { "stylua" },
+        -- Conform will run multiple formatters sequentially
+        python = { "yapf" }, -- need to pip install yapf
+        -- Use a sub-list to run only the first available formatter
+        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { "prettier" },
+        go = {
+            "gofmt", "goimports"
+        }
+    },
+})
+
+-- customize yapf
+conform.formatters.yapf = {
+    prepend_args = function(_, _)
+        return { "--style", "{based_on_style: google, indent_width: 4}" }
+    end,
+}
 
 -- [[ Configure harpoon ]]
 local harpoon = require("harpoon")
@@ -844,9 +865,9 @@ local on_attach = function(_, bufnr)
     -- end, '[W]orkspace [L]ist Folders')
 
     -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
-    end, { desc = 'Format current buffer with LSP' })
+    -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    --     vim.lsp.buf.format()
+    -- end, { desc = 'Format current buffer with LSP' })
 end
 
 -- document existing key chains
