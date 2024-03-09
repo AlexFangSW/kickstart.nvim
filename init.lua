@@ -142,7 +142,7 @@ require('lazy').setup({
 
     'sindrets/diffview.nvim',
     -- Useful plugin to show you pending keybinds.
-    { 'folke/which-key.nvim', opts = {} },
+    -- { 'folke/which-key.nvim', opts = {} },
     {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
@@ -159,6 +159,7 @@ require('lazy').setup({
         }
     },
 
+    -- [[ Colorschemes ]]
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -193,12 +194,12 @@ require('lazy').setup({
         main = 'ibl',
         opts = {},
     },
-    {
-        -- for comments like TODO, NOTES to have special effects
-        -- Remamber to add ':' at the end !!!
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-    },
+    -- {
+    --     -- for comments like TODO, NOTES to have special effects
+    --     -- Remamber to add ':' at the end !!!
+    --     "folke/todo-comments.nvim",
+    --     dependencies = { "nvim-lua/plenary.nvim" },
+    -- },
     {
         'numToStr/Comment.nvim',
         opts = {
@@ -291,6 +292,7 @@ require('lazy').setup({
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
     },
+
     -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
     --       These are some example plugins that I've included in the kickstart repository.
     --       Uncomment any of the lines below to enable them.
@@ -468,7 +470,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ Configure todo-comments]]
-require("todo-comments").setup()
+-- require("todo-comments").setup()
 
 -- [[ Configure Conform (autoformat)]]
 local conform = require("conform")
