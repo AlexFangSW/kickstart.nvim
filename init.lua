@@ -1,7 +1,5 @@
 --[[
 
-- git fugitive ?
-
 - clear all unassecery stuff after you finish~~
 
 =====================================================================
@@ -104,6 +102,15 @@ require('lazy').setup({
     },
 
     {
+        -- Git commit graph
+        "rbong/vim-flog",
+        lazy = true,
+        cmd = { "Flog", "Flogsplit", "Floggit" },
+        dependencies = {
+            "tpope/vim-fugitive",
+        },
+    },
+    {
         -- Autocompletion
         'hrsh7th/nvim-cmp',
         dependencies = {
@@ -204,7 +211,6 @@ require('lazy').setup({
             },
         },
     },
-
     {
         -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
@@ -223,7 +229,48 @@ require('lazy').setup({
         end,
     },
     {
-        "nvim-tree/nvim-tree.lua"
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "MunifTanjim/nui.nvim",
+            "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+        },
+        opts = {
+            sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+            open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+            filesystem = {
+                bind_to_cwd = false,
+                follow_current_file = { enabled = true },
+                use_libuv_file_watcher = true,
+                filtered_items = {
+                    visible = true,
+                },
+            },
+            window = {
+                width = 25,
+                mappings = {
+                    ["<space>"] = "none",
+                    ["Y"] = {
+                        function(state)
+                            local node = state.tree:get_node()
+                            local path = node:get_id()
+                            vim.fn.setreg("+", path, "c")
+                        end,
+                        desc = "copy path to clipboard",
+                    },
+                },
+            },
+            default_component_configs = {
+                indent = {
+                    with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+                    expander_collapsed = "",
+                    expander_expanded = "",
+                    expander_highlight = "NeoTreeExpander",
+                },
+            },
+        }
     },
     {
         "iamcco/markdown-preview.nvim",
@@ -254,6 +301,7 @@ vim.cmd.colorscheme("catppuccin")
 -- [[ Python settings ]]
 -- format on save
 vim.cmd([[autocmd BufWritePre *.py :Yapf]])
+
 -- indentation
 local function python_indent()
     return [[:setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab"]]
@@ -335,7 +383,7 @@ vim.keymap.set("n", "<C-l>", "zL")
 vim.keymap.set("n", "<C-h>", "zH")
 
 -- toggle nvim tree
-vim.keymap.set("n", "<C-b>", ":NvimTreeToggle<CR>")
+vim.keymap.set("n", "<C-b>", ":Neotree toggle<CR>")
 
 -- multiple functions for <esc>
 vim.keymap.set("n", "<esc>", "<esc>:nohl<CR>")
@@ -351,6 +399,18 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+-- open git diff current vs head
+-- use :DiffviewOpen <old>..<new> to see all changes merged in specified range of commit
+vim.keymap.set("n", "<F2>", ":DiffviewOpen<CR>")
+
+-- open git commit graph
+vim.keymap.set("n", "<F3>", ":Flog<CR>")
+
+-- open current file's commit history
+vim.keymap.set("n", "<F4>", ":DiffviewFileHistory %<CR>")
+
+-- close tab
+vim.keymap.set("n", "<leader><Tab>q", ":tabclose<CR>")
 
 -- Remap for dealing with word wrap
 -- vim.keymap.set('n', 'k', "", { expr = true, silent = true })
@@ -375,7 +435,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ Configure nvim-tree ]]
-require("nvim-tree").setup()
+-- require("nvim-tree").setup()
 
 -- [[ Configure gitsigns ]]
 require('gitsigns').setup {
@@ -420,6 +480,76 @@ require('gitsigns').setup {
         -- map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end
 }
+
+-- [[ Configure Diffview ]]
+local actions = require("diffview.actions")
+
+require("diffview").setup({
+    diff_binaries = false,    -- Show diffs for binaries
+    enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+    git_cmd = { "git" },      -- The git executable followed by default args.
+    hg_cmd = { "hg" },        -- The hg executable followed by default args.
+    use_icons = true,         -- Requires nvim-web-devicons
+    show_help_hints = true,   -- Show hints for how to open the help panel
+    watch_index = true,       -- Update views and index buffers when the git index changes.
+    icons = {                 -- Only applies when use_icons is true.
+        folder_closed = "",
+        folder_open = "",
+    },
+    signs = {
+        fold_closed = "",
+        fold_open = "",
+        done = "✓",
+    },
+    view = {
+        -- Configure the layout and behavior of different types of views.
+        -- Available layouts:
+        --  'diff1_plain'
+        --    |'diff2_horizontal'
+        --    |'diff2_vertical'
+        --    |'diff3_horizontal'
+        --    |'diff3_vertical'
+        --    |'diff3_mixed'
+        --    |'diff4_mixed'
+        -- For more info, see ':h diffview-config-view.x.layout'.
+        default = {
+            -- Config for changed files, and staged files in diff views.
+            layout = "diff2_horizontal",
+            winbar_info = false, -- See ':h diffview-config-view.x.winbar_info'
+        },
+        merge_tool = {
+            -- Config for conflicted files in diff views during a merge or rebase.
+            layout = "diff3_horizontal",
+            disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
+            winbar_info = true,         -- See ':h diffview-config-view.x.winbar_info'
+        },
+        file_history = {
+            -- Config for changed files in file history views.
+            layout = "diff2_horizontal",
+            winbar_info = false, -- See ':h diffview-config-view.x.winbar_info'
+        },
+    },
+    file_panel = {
+        listing_style = "tree",              -- One of 'list' or 'tree'
+        tree_options = {                     -- Only applies when listing_style is 'tree'
+            flatten_dirs = true,             -- Flatten dirs that only contain one single dir
+            folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
+        },
+        win_config = {                       -- See ':h diffview-config-win_config'
+            position = "left",
+            width = 25,
+            win_opts = {}
+        },
+    },
+    file_history_panel = {
+        win_config = { -- See ':h diffview-config-win_config'
+            position = "bottom",
+            height = 5,
+            win_opts = {}
+        },
+    },
+})
+
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -525,6 +655,7 @@ local function telescope_live_grep_open_files()
         prompt_title = 'Live Grep in Open Files',
     }
 end
+
 -- vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 -- vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 -- vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
@@ -533,7 +664,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 -- vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<C-f>', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 -- vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
--- vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 -- vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
 -- [[ Configure Treesitter ]]
@@ -542,8 +673,31 @@ vim.keymap.set('n', '<C-f>', require('telescope.builtin').live_grep, { desc = '[
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
-        ensure_installed = { 'go', 'lua', 'python', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
-
+        ensure_installed = {
+            "bash",
+            "c",
+            "diff",
+            "html",
+            "javascript",
+            "jsdoc",
+            "json",
+            "jsonc",
+            "lua",
+            "luadoc",
+            "luap",
+            "markdown",
+            "markdown_inline",
+            "python",
+            "query",
+            "regex",
+            "toml",
+            "tsx",
+            "typescript",
+            "vim",
+            "vimdoc",
+            "xml",
+            "yaml",
+        },
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
         auto_install = false,
         -- Install languages synchronously (only applied to `ensure_installed`)
@@ -642,7 +796,7 @@ local on_attach = function(_, bufnr)
         vim.lsp.buf.hover()
     end
 
-    nmap('gh', double_hover, '[G]et [H]elp Hover Documentation')
+    nmap('gh', vim.lsp.buf.hover, '[G]et [H]elp Hover Documentation')
     -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
