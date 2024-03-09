@@ -100,7 +100,20 @@ require('lazy').setup({
             'folke/neodev.nvim',
         },
     },
-
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            settings = {
+                save_on_toggle = true,
+                sync_on_ui_close = false,
+                key = function()
+                    return vim.loop.cwd()
+                end,
+            },
+        }
+    },
     {
         -- Git commit graph
         "rbong/vim-flog",
@@ -256,7 +269,7 @@ require('lazy').setup({
                         function(state)
                             local node = state.tree:get_node()
                             local path = node:get_id()
-                            vim.fn.setreg("+", path, "c")
+                            vim.fn.setreg("+", path, { "c" })
                         end,
                         desc = "copy path to clipboard",
                     },
@@ -446,8 +459,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*',
 })
 
--- [[ Configure nvim-tree ]]
--- require("nvim-tree").setup()
+-- [[ Configure harpoon ]]
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup({})
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-j>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-k>", function() harpoon:list():next() end)
 
 -- [[ Configure gitsigns ]]
 require('gitsigns').setup {
@@ -858,7 +882,7 @@ require('mason-lspconfig').setup()
 --  define the property 'filetypes' to the map in question.
 local servers = {
     -- clangd = {},
-    -- gopls = {},
+    gopls = {},
     pyright = {},
     -- rust_analyzer = {},
     -- tsserver = {},
