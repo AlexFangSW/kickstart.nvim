@@ -413,6 +413,7 @@ vim.o.termguicolors = true
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'Q', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
 
 -- resize window 'M' == alt
 vim.keymap.set("n", '<M-k>', ":resize +2<CR>")
