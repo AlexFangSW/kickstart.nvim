@@ -329,11 +329,29 @@ vim.cmd.colorscheme("gruvbox-material")
 
 -- [[ Python settings ]]
 -- autoformat is done by Conform
+
 -- indentation
-local function python_indent()
-    return [[:setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab"]]
-end
-vim.cmd([[autocmd BufRead,BufNewFile *.py ]] .. python_indent())
+local pythonIndentGroup = vim.api.nvim_create_augroup('PythonIndentGroup', { clear = true })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    callback = function()
+        vim.cmd([[:setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab]])
+    end,
+    group = pythonIndentGroup,
+    pattern = '*.py'
+})
+
+-- Run lsp restart when creating a new buffer for python files.
+-- Or else, pyright will raise error when importing the new file.
+-- This will only trigger once per-file, :q or switching between files
+-- will not trigger it again :)
+local pythonLSPGroup = vim.api.nvim_create_augroup('PythonLSPGroup', { clear = true })
+vim.api.nvim_create_autocmd({ "BufNew" }, {
+    callback = function()
+        vim.cmd([[:LspRestart]])
+    end,
+    group = pythonLSPGroup,
+    pattern = '*.py'
+})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
