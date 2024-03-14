@@ -652,9 +652,11 @@ require('telescope').setup {
         sorting_strategy = "ascending", -- display results top->bottom
         layout_config = {
             prompt_position = "top"     -- search bar at the top
-        }
+        },
+        file_ignore_patterns = { ".git/" }
     },
     pickers = {
+        find_files = { hidden = true },
 
         current_buffer_tags = { fname_width = 100, },
 
