@@ -101,6 +101,10 @@ require('lazy').setup({
         },
     },
     {
+        "ray-x/lsp_signature.nvim",
+        event = "VeryLazy"
+    },
+    {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -510,6 +514,13 @@ conform.formatters.yapf = {
         return { "--style", "{based_on_style: google, indent_width: 4}" }
     end,
 }
+
+
+-- [[ Configure lsp signature]]
+local lsp_signature = require("lsp_signature")
+lsp_signature.setup({
+    hint_enable = false
+})
 
 -- [[ Configure harpoon ]]
 local harpoon = require("harpoon")
