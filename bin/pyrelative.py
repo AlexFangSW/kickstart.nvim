@@ -34,7 +34,9 @@ class Data:
 tmp: list[str] = []
 for line in sys.stdin:
     line = line.strip()
-    tmp.append(line)
+    if line:
+        print("got line", line)
+        tmp.append(line)
 
 # load data
 data = Data(cwd=tmp[0], current_file_path=tmp[1], import_paths=tmp[2:])
