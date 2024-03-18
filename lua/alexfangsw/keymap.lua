@@ -60,6 +60,9 @@ vim.keymap.set("n", "<F3>", ":Flog<CR>")
 -- open current file's commit history
 vim.keymap.set("n", "<F4>", ":DiffviewFileHistory %<CR>")
 
+-- restart lsp
+vim.keymap.set("n", "<F5>", ":LspRestart<CR>")
+
 -- close tab
 vim.keymap.set("n", "<leader><Tab>q", ":tabclose<CR>")
 
