@@ -62,22 +62,22 @@ local function relative_import()
     local tree = parser:parse()[1]
     for _, node, _ in query:iter_captures(tree:root(), 0, 0, -1) do
         local start_row, start_col, end_row, end_col = node:range() -- range of the capture
-        local text = vim.treesitter.get_node_text(node, 0)
+        local original_import_path = vim.treesitter.get_node_text(node, 0)
 
         -- organize input
         -- [install pyrelative.py /usr/local/bin]
-        local input = cwd .. "\n" .. file_path .. "\n" .. text
+        local input = cwd .. "\n" .. file_path .. "\n" .. original_import_path
         local pycmd = "pyrelative.py"
         local command = "echo " .. "'" .. input .. "'" .. " | " .. pycmd
 
         vim.fn.jobstart({ "bash", "-c", command }, {
             stdin = "pipe",
             on_stdout = function(_, data)
-                for _, v in pairs(data) do
-                    if v ~= "" then
+                for _, new_import_path in pairs(data) do
+                    if new_import_path ~= "" and new_import_path ~= original_import_path then
                         -- appliy changes to the current buffer
                         if vim.api.nvim_buf_is_valid(bufnum) then
-                            vim.api.nvim_buf_set_text(bufnum, start_row, start_col, end_row, end_col, { v })
+                            vim.api.nvim_buf_set_text(bufnum, start_row, start_col, end_row, end_col, { new_import_path })
                         end
                     end
                 end
