@@ -63,33 +63,42 @@ local function relative_import()
         local text = vim.treesitter.get_node_text(node, 0)
 
         -- organize input
-        local input = {
-            cwd, file_path, text, ""
-        }
+        -- [install pyrelative.py /usr/local/bin]
+        local input = cwd .. "\n" .. file_path .. "\n" .. text
+        local pycmd = "pyrelative.py"
+        local command = "echo " .. "'" .. input .. "'" .. " | " .. pycmd
 
-        channel_id = vim.fn.jobstart({ "python3", "~/.config/nvim/bin/pyrelative.py" }, {
+        channel_id = vim.fn.jobstart({ "bash", "-c", command }, {
             stdin = "pipe",
             on_stdout = function(_, data)
-                if data then
-                    print(vim.inspect(data))
-                    -- appliy changes to the current buffer
-                    -- vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, replacement)
+                for _, v in pairs(data) do
+                    if v ~= "" then
+                        -- appliy changes to the current buffer
+                        vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, { v })
+                    end
                 end
             end,
             on_stderr = function(_, data)
-                if data then
-                    print("Error: " .. vim.inspect(data))
+                for _, v in pairs(data) do
+                    if v ~= "" then
+                        print("Error: " .. v)
+                    end
                 end
             end,
             stdout_buffered = true,
             stderr_buffered = true
         })
-        if channel_id ~= 0 or channel_id ~= -1 then
-            -- pipe to our python script to get there relative import
-            print(vim.inspect(input))
-            vim.fn.chansend(channel_id, input)
-        end
     end
 end
 
 vim.api.nvim_create_user_command("PyRelative", relative_import, {})
+
+-- Change to relative import on save
+local py_on_save = vim.api.nvim_create_augroup('PyOnSave', { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    callback = function()
+        vim.cmd([[:PyRelative]])
+    end,
+    group = py_on_save,
+    pattern = '*.py'
+})
