@@ -53,8 +53,10 @@ local function relative_import()
     )
 
     -- cwd and current buffer file path
+    -- get buffer number to prevent writting to wrong buffer on ':wqa'
     local cwd = vim.fn.getcwd()
-    local file_path = vim.uri_from_bufnr(0)
+    local bufnum = vim.api.nvim_get_current_buf()
+    local file_path = vim.uri_from_bufnr(bufnum)
 
     -- parse the query to get those imports
     local tree = parser:parse()[1]
@@ -74,7 +76,9 @@ local function relative_import()
                 for _, v in pairs(data) do
                     if v ~= "" then
                         -- appliy changes to the current buffer
-                        vim.api.nvim_buf_set_text(0, start_row, start_col, end_row, end_col, { v })
+                        if vim.api.nvim_buf_is_valid(bufnum) then
+                            vim.api.nvim_buf_set_text(bufnum, start_row, start_col, end_row, end_col, { v })
+                        end
                     end
                 end
             end,
@@ -94,11 +98,11 @@ end
 vim.api.nvim_create_user_command("PyRelative", relative_import, {})
 
 -- Change to relative import on save
--- local py_on_save = vim.api.nvim_create_augroup('PyOnSave', { clear = true })
--- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
---     callback = function()
---         vim.cmd([[:PyRelative]])
---     end,
---     group = py_on_save,
---     pattern = '*.py'
--- })
+local py_on_save = vim.api.nvim_create_augroup('PyOnSave', { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    callback = function()
+        vim.cmd([[:PyRelative]])
+    end,
+    group = py_on_save,
+    pattern = '*.py'
+})
