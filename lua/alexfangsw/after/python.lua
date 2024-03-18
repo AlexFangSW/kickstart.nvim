@@ -70,7 +70,7 @@ local function relative_import()
         local pycmd = "pyrelative.py"
         local command = "echo " .. "'" .. input .. "'" .. " | " .. pycmd
 
-        channel_id = vim.fn.jobstart({ "bash", "-c", command }, {
+        vim.fn.jobstart({ "bash", "-c", command }, {
             stdin = "pipe",
             on_stdout = function(_, data)
                 for _, v in pairs(data) do
