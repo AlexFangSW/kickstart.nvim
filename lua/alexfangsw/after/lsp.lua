@@ -38,14 +38,15 @@ require('mason').setup()
 require('mason-lspconfig').setup()
 
 local servers = {
-    -- clangd = {},
     gopls = {},
     pyright = {},
     jsonls = {},
-    -- rust_analyzer = {},
-    -- tsserver = {},
-    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+    dockerls = {},
+    bashls = {},
+    tsserver = {},
+    html = { filetypes = { 'html', 'twig', 'hbs' } },
+    helm_ls = {},
+    yamlls = {},
     lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
