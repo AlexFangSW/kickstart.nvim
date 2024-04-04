@@ -2,9 +2,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- set default indent
-vim.opt.ts = 4
-vim.opt.sts = 4
-vim.opt.sw = 4
+vim.opt.ts = 2
+vim.opt.sts = 2
+vim.opt.sw = 2
 vim.opt.et = true
 
 -- Set cursor style
