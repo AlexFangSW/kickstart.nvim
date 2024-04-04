@@ -46,9 +46,12 @@ return {
 					return
 				end
 
-				-- Tsserver usually works poorly. Sorry you work with bad languages
-				-- You can remove this line if you know what you're doing :)
-				if client.name == 'tsserver' then
+				-- disable lsp format
+				local disable_map = {
+					["tsserver"] = true,
+					["jsonls"] = true,
+				}
+				if disable_map[client.name] then
 					return
 				end
 

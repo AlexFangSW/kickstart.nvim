@@ -19,8 +19,10 @@ return {
 					"html",
 					"javascript",
 					"jsdoc",
-					"json",
-					"jsonc",
+					-- don't use json related stuff with treesitter
+					-- it's so bad with one line json files...
+					-- "json",
+					-- "jsonc",
 					"lua",
 					"luadoc",
 					"luap",
@@ -48,7 +50,7 @@ return {
 				highlight = { enable = true },
 				indent = { enable = true },
 				incremental_selection = {
-					enable = true,
+					enable = false,
 					keymaps = {
 						init_selection = '<c-space>',
 						node_incremental = '<c-space>',
@@ -58,7 +60,7 @@ return {
 				},
 				textobjects = {
 					select = {
-						enable = true,
+						enable = false,
 						lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 						keymaps = {
 							-- You can use the capture groups defined in textobjects.scm
