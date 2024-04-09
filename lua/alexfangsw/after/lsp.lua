@@ -45,7 +45,11 @@ local servers = {
     bashls = {},
     tsserver = {},
     html = { filetypes = { 'html', 'twig', 'hbs' } },
-    helm_ls = {},
+    helm_ls = {
+        yamlls = {
+            path = "yaml-language-server",
+        }
+    },
     yamlls = {},
     lua_ls = {
         Lua = {
@@ -71,13 +75,47 @@ mason_lspconfig.setup {
     ensure_installed = vim.tbl_keys(servers),
 }
 
+-- LSP Setups
+local function default_setup(server_name)
+    require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+    }
+end
+
+-- Yamlls dosen't work well with helm files...
+-- disable diagnostic for buffer with filetypes == helm
+local function helm_setup(server_name)
+    require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = function(_, bufnr)
+            on_attach(_, bufnr)
+            vim.diagnostic.disable(bufnr)
+        end,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+    }
+end
+
+local function set_table_default(table)
+    local mt = {
+        __index = function()
+            return default_setup
+        end
+    }
+    setmetatable(table, mt)
+end
+
+local lsp_setup_table = {
+    ["helm_ls"] = helm_setup
+}
+
+set_table_default(lsp_setup_table)
+
 mason_lspconfig.setup_handlers {
     function(server_name)
-        require('lspconfig')[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-            filetypes = (servers[server_name] or {}).filetypes,
-        }
+        lsp_setup_table[server_name](server_name)
     end,
 }
