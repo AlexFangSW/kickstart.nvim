@@ -6,3 +6,4 @@
 require("alexfangsw.after.lsp")
 require("alexfangsw.after.highligh_on_yank")
 require("alexfangsw.after.python")
+require("alexfangsw.after.utils")
