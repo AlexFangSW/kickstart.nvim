@@ -97,11 +97,25 @@ end
 
 vim.api.nvim_create_user_command("PyRelative", relative_import, {})
 
+local activate_relative_import = true
+local function py_relative_toggle()
+    activate_relative_import = not activate_relative_import
+    if activate_relative_import then
+        print("PyRelative is active")
+    else
+        print("PyRelative is disabled")
+    end
+end
+vim.api.nvim_create_user_command("PyRelativeToggle", py_relative_toggle, {})
+
+
 -- Change to relative import on save
 local py_on_save = vim.api.nvim_create_augroup('PyOnSave', { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     callback = function()
-        vim.cmd([[:PyRelative]])
+        if activate_relative_import then
+            vim.cmd([[:PyRelative]])
+        end
     end,
     group = py_on_save,
     pattern = '*.py'
