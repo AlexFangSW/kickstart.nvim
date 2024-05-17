@@ -29,41 +29,46 @@ return {
 					},
 				},
 				sorting_strategy = "ascending", -- display results top->bottom
+				layout_strategy = 'vertical',
 				layout_config = {
-					prompt_position = "top" -- search bar at the top
+					prompt_position = "top", -- search bar at the top
+					mirror = true,
+					preview_cutoff = 1,
+					height = 0.99,
+					width = 0.99
 				},
 				file_ignore_patterns = { ".git/" }
 			},
 			pickers = {
-				find_files = { hidden = true },
+				find_files = { hidden = true, previewer = false },
 
-				current_buffer_tags = { fname_width = 100, },
+				current_buffer_tags = { fname_width = 0.99, },
 
-				jumplist = { fname_width = 100, },
+				jumplist = { fname_width = 0.99, },
 
-				loclist = { fname_width = 100, },
+				loclist = { fname_width = 0.99, },
 
-				lsp_definitions = { fname_width = 100, },
+				lsp_definitions = { fname_width = 0.99, },
 
-				lsp_document_symbols = { fname_width = 100, },
+				lsp_document_symbols = { fname_width = 0.99, },
 
-				lsp_dynamic_workspace_symbols = { fname_width = 100, },
+				lsp_dynamic_workspace_symbols = { fname_width = 0.99, },
 
-				lsp_implementations = { fname_width = 100, },
+				lsp_implementations = { fname_width = 0.99, },
 
-				lsp_incoming_calls = { fname_width = 100, },
+				lsp_incoming_calls = { fname_width = 0.99, },
 
-				lsp_outgoing_calls = { fname_width = 100, },
+				lsp_outgoing_calls = { fname_width = 0.99, },
 
-				lsp_references = { fname_width = 100, },
+				lsp_references = { fname_width = 0.99, },
 
-				lsp_type_definitions = { fname_width = 100, },
+				lsp_type_definitions = { fname_width = 0.99, },
 
-				lsp_workspace_symbols = { fname_width = 100, },
+				lsp_workspace_symbols = { fname_width = 0.99, },
 
-				quickfix = { fname_width = 100, },
+				quickfix = { fname_width = 0.99, },
 
-				tags = { fname_width = 100, },
+				tags = { fname_width = 0.99, },
 
 			}
 		}
