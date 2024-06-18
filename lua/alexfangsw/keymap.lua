@@ -17,7 +17,7 @@
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'Q', '<Nop>', { silent = true })
--- vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
 
 -- resize window.
 -- 'M' == alt
