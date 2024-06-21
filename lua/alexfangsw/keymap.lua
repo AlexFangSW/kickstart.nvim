@@ -68,3 +68,14 @@ vim.keymap.set("n", "<leader><Tab>q", ":tabclose<CR>")
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>gh', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+
+-- surround word in visual mode
+-- `> and `< goes to the previous selections "end" and "start"
+-- then we do the insert and use 'gv' to return to visual mode
+-- https://www.reddit.com/r/neovim/comments/18r5lbn/make_it_so_using_on_selected_text_surrounds_it/
+vim.keymap.set("v", "(", "<esc>`>a)<esc>`<i(<esc>gv", { remap = false })
+vim.keymap.set("v", "{", "<esc>`>a}<esc>`<i{<esc>gv", { remap = false })
+vim.keymap.set("v", "[", "<esc>`>a]<esc>`<i[<esc>gv", { remap = false })
+vim.keymap.set("v", "\"", "<esc>`>a\"<esc>`<i\"<esc>gv", { remap = false })
+vim.keymap.set("v", "'", "<esc>`>a'<esc>`<i'<esc>gv", { remap = false })
+vim.keymap.set("v", "`", "<esc>`>a`<esc>`<i`<esc>gv", { remap = false })
