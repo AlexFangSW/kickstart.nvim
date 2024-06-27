@@ -23,6 +23,7 @@ return {
 					-- it's so bad with one line json files...
 					-- "json",
 					-- "jsonc",
+					"go",
 					"lua",
 					"luadoc",
 					"luap",
