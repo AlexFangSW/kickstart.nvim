@@ -8,3 +8,7 @@ When you run Neovim using `nvim-kickstart` alias it will use the alternative con
 alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 ```
 
+## Depandencies
+### Telescope
+- `ripgrep` 
+- `fzf` 
