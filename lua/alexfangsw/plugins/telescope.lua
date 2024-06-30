@@ -105,6 +105,7 @@ return {
 		local function live_grep_git_root()
 			local git_root = find_git_root()
 			if git_root then
+				-- MUST INSTALL 'ripgrep'
 				require('telescope.builtin').live_grep {
 					search_dirs = { git_root },
 				}
