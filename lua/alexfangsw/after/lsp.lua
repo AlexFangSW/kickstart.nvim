@@ -43,7 +43,13 @@ local servers = {
     jsonls = {},
     dockerls = {},
     bashls = {},
-    tsserver = {},
+    tsserver = {
+        javascript = {
+            format = {
+                semicolons = "remove"
+            }
+        }
+    },
     html = { filetypes = { 'html', 'twig', 'hbs' } },
     helm_ls = {
         yamlls = {
@@ -59,7 +65,7 @@ local servers = {
             -- diagnostics = { disable = { 'missing-fields' } },
         },
     },
-    eslint = {}
+    -- eslint = {}
 }
 
 -- Setup neovim lua configuration
@@ -110,7 +116,7 @@ local function set_table_default(table)
 end
 
 local lsp_setup_table = {
-    ["helm_ls"] = helm_setup
+    ["helm_ls"] = helm_setup,
 }
 
 set_table_default(lsp_setup_table)

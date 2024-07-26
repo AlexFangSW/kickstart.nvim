@@ -34,7 +34,7 @@ return {
 				python = { "yapf" }, -- need to pip install yapf
 				-- Use a sub-list to run only the first available formatter
 				-- javascript = { { "prettierd", "prettier" } },
-				javascript = { "prettier" },
+				-- javascript = { "prettier" },
 				go = {
 					"gofmt", "goimports"
 				}
