@@ -1,20 +1,3 @@
--- [[ Keymaps that don't need plugings ]]
--- [[ Keymaps that don't need plugings ]]
--- [[ Keymaps that don't need plugings ]]
--- [[ Keymaps that don't need plugings ]]
-
--- [[
--- If you want to find and replace multiple files:
--- This will open all matched files in nvim buffer.
--- nvim `find . -name '*.txt' -exec grep -le 'Alex' {} +`
--- -l lists all matched filename
--- -e means regex
--- Then you can use 'bufdo <command>' to replace words in all buffers
--- Ex: bufdo %s/Alex/Grace/gc
--- It's like replacing word in file, but on all buffers
--- Remamber to 'bufdo w' to save changes on all files
--- ]]
-
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'Q', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, 'q', '<Nop>', { silent = true })
@@ -79,3 +62,6 @@ vim.keymap.set("v", "[", "<esc>`>a]<esc>`<i[<esc>gv", { remap = false })
 vim.keymap.set("v", "\"", "<esc>`>a\"<esc>`<i\"<esc>gv", { remap = false })
 vim.keymap.set("v", "'", "<esc>`>a'<esc>`<i'<esc>gv", { remap = false })
 vim.keymap.set("v", "`", "<esc>`>a`<esc>`<i`<esc>gv", { remap = false })
+
+-- show undotree
+vim.keymap.set('n', '<F6>', ':UndotreeShow<CR>')
