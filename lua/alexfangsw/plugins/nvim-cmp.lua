@@ -12,6 +12,10 @@ return {
 
 		-- Adds a number of user-friendly snippets
 		'rafamadriz/friendly-snippets',
+
+		-- Show signature help in insert mode
+		"hrsh7th/cmp-nvim-lsp-signature-help",
+
 	},
 	config = function()
 		-- [[ Configure nvim-cmp ]]
@@ -49,6 +53,7 @@ return {
 				{ name = 'nvim_lsp' },
 				{ name = 'luasnip' },
 				{ name = 'path' },
+				{ name = 'nvim_lsp_signature_help' },
 			},
 		}
 	end

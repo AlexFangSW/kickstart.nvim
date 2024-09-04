@@ -10,15 +10,7 @@
 -- 	end
 --
 -- }
-return {
-	"hrsh7th/cmp-nvim-lsp-signature-help",
-	event = "VeryLazy",
-	config = function()
-		local lsp_signature = require("cmp")
-		lsp_signature.setup({
-			sources = {
-				{ name = 'nvim_lsp_signature_help' }
-			}
-		})
-	end
-}
+-- return {
+-- 	"hrsh7th/cmp-nvim-lsp-signature-help"
+-- }
+return {}
