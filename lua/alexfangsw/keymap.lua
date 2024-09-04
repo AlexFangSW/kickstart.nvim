@@ -62,6 +62,7 @@ vim.keymap.set("v", "[", "<esc>`>a]<esc>`<i[<esc>gv", { remap = false })
 vim.keymap.set("v", "\"", "<esc>`>a\"<esc>`<i\"<esc>gv", { remap = false })
 vim.keymap.set("v", "'", "<esc>`>a'<esc>`<i'<esc>gv", { remap = false })
 vim.keymap.set("v", "`", "<esc>`>a`<esc>`<i`<esc>gv", { remap = false })
+vim.keymap.set("v", "**", "<esc>`>a**<esc>`<i**<esc>gv", { remap = false })
 
 -- show undotree
 vim.keymap.set('n', '<F6>', ':UndotreeShow<CR>')
