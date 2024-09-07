@@ -99,8 +99,20 @@ local function helm_setup(server_name)
         capabilities = capabilities,
         on_attach = function(_, bufnr)
             on_attach(_, bufnr)
-            vim.diagnostic.disable(bufnr)
+            vim.diagnostic.enable(false, { bufnr = bufnr })
         end,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+    }
+end
+
+-- This is a workaround on the tsserver deprication warnning....
+-- Somehow lspconfig wants to change the server name ... from "tsserver" to "ts_ls" ... WTF
+-- https://github.com/neovim/nvim-lspconfig/pull/3232#issuecomment-2331025714
+local function ts_setup(server_name)
+    require('lspconfig')["ts_ls"].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
         settings = servers[server_name],
         filetypes = (servers[server_name] or {}).filetypes,
     }
@@ -117,6 +129,7 @@ end
 
 local lsp_setup_table = {
     ["helm_ls"] = helm_setup,
+    ["tsserver"] = ts_setup,
 }
 
 set_table_default(lsp_setup_table)
