@@ -66,3 +66,7 @@ vim.keymap.set("v", "**", "<esc>`>a**<esc>`<i**<esc>gv", { remap = false })
 
 -- show undotree
 vim.keymap.set('n', '<F6>', ':UndotreeShow<CR>')
+
+-- quickfix list movements
+vim.keymap.set("n", "<C-s>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-a>", "<cmd>cprev<CR>zz")
