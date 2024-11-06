@@ -35,6 +35,9 @@ local function get_commit()
     }
     local concate_command = table.concat(command, " ")
     local commit_hash = vim.fn.system(concate_command)
+    if string.match(commit_hash, "^^") then
+        vim.notify_once("GetCommit: this is a init commit, can't be viewed using ViewCommit !!")
+    end
     -- set commit hash to clipbord
     vim.fn.setreg('+', commit_hash)
 end
