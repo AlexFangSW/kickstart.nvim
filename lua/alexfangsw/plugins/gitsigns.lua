@@ -1,6 +1,7 @@
 return {
 	-- Adds git related signs to the gutter, as well as utilities for managing changes
 	'lewis6991/gitsigns.nvim',
+	event = "VeryLazy",
 	config = function()
 		-- [[ Configure gitsigns ]]
 		require('gitsigns').setup {
@@ -11,6 +12,10 @@ return {
 				topdelete = { text = '‾' },
 				changedelete = { text = '~' },
 			},
+			current_line_blame_opts = {
+				delay = 500,
+			},
+			current_line_blame_formatter = ' [<abbrev_sha>] <author>, <author_time:%R> - <summary>',
 			on_attach = function(bufnr)
 				local gs = package.loaded.gitsigns
 
