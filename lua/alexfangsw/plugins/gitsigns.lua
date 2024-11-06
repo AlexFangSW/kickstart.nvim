@@ -15,7 +15,7 @@ return {
 			current_line_blame_opts = {
 				delay = 500,
 			},
-			current_line_blame_formatter = ' [<abbrev_sha>] <author>, <author_time:%R> - <summary>',
+			current_line_blame_formatter = ' [<abbrev_sha>] <author>, <author_time:%R> - <summary> (<leader>c to copy hash)',
 			on_attach = function(bufnr)
 				local gs = package.loaded.gitsigns
 
