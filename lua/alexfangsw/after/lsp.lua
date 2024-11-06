@@ -65,6 +65,7 @@ local servers = {
             -- diagnostics = { disable = { 'missing-fields' } },
         },
     },
+    cssls = {}
     -- eslint = {}
 }
 
