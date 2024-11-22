@@ -13,5 +13,10 @@ local function gruvbox()
     vim.cmd.colorscheme("gruvbox-material")
 end
 
+local function dracula()
+    vim.cmd.colorscheme("dracula")
+end
+
+-- dracula()
 gruvbox()
 -- zenbones()
