@@ -44,10 +44,3 @@ end
 
 vim.api.nvim_create_user_command("GetCommit", get_commit, {})
 vim.keymap.set("n", "<leader>c", ":GetCommit<CR>")
-
--- Copilot accept suggestion
-vim.keymap.set('i', '<S-Tab>', 'copilot#Accept("\\<CR>")', {
-    expr = true,
-    replace_keycodes = false
-})
-vim.g.copilot_no_tab_map = true
