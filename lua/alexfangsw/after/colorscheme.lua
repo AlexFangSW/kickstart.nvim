@@ -23,6 +23,6 @@ local function vague()
 end
 
 -- dracula()
--- gruvbox()
+gruvbox()
 -- zenbones()
-vague()
+-- vague()

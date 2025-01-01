@@ -6,9 +6,9 @@
 -- 	"Mofiqul/dracula.nvim",
 -- }
 
--- return {
--- 	"sainnhe/gruvbox-material",
--- }
+return {
+	"sainnhe/gruvbox-material",
+}
 
 -- return {
 -- 	"zenbones-theme/zenbones.nvim",
@@ -17,6 +17,6 @@
 -- 	},
 -- }
 --
-return {
-	"vague2k/vague.nvim"
-}
+-- return {
+-- 	"vague2k/vague.nvim"
+-- }
