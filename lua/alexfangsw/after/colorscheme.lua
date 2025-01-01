@@ -17,6 +17,12 @@ local function dracula()
     vim.cmd.colorscheme("dracula")
 end
 
+local function vague()
+    require("vague").setup({})
+    vim.cmd.colorscheme("vague")
+end
+
 -- dracula()
-gruvbox()
+-- gruvbox()
 -- zenbones()
+vague()
