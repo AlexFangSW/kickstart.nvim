@@ -17,8 +17,7 @@ vim.keymap.set("n", "<C-l>", "zL")
 vim.keymap.set("n", "<C-h>", "zH")
 
 -- toggle nvim tree
--- vim.keymap.set("n", "<C-b>", ":Neotree toggle<CR>")
-vim.keymap.set("n", "<C-b>", ":Oil <CR>")
+vim.keymap.set("n", "<C-b>", ":Neotree toggle<CR>")
 
 -- multiple functions for <esc>
 vim.keymap.set("n", "<esc>", "<esc>:nohl<CR>")
