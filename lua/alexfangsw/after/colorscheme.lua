@@ -13,5 +13,5 @@ local function gruvbox()
     vim.cmd.colorscheme("gruvbox-material")
 end
 
--- gruvbox()
-zenbones()
+gruvbox()
+-- zenbones()
