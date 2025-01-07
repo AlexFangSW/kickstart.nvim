@@ -13,5 +13,10 @@ local function gruvbox()
     vim.cmd.colorscheme("gruvbox-material")
 end
 
+local function evergarden()
+    vim.cmd.colorscheme("evergarden")
+end
+
 gruvbox()
 -- zenbones()
+-- evergarden()
