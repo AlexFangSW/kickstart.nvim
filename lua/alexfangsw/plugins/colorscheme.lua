@@ -17,6 +17,6 @@ return {
 		opts = {
 			transparent_background = true,
 			variant = 'hard', -- 'hard'|'medium'|'soft'
-		}
+		},
 	},
 }
