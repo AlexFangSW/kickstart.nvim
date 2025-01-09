@@ -20,6 +20,6 @@ local function evergarden()
     vim.cmd.colorscheme("evergarden")
 end
 
-gruvbox()
+-- gruvbox()
 -- zenbones()
--- evergarden()
+evergarden()
