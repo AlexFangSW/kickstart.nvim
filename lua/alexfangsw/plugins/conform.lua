@@ -20,6 +20,28 @@ return {
 			desc = "Re-enable autoformat-on-save",
 		})
 
+		-- set python formatter (default: yapf)
+		local py_formatters = { "yapf", "black" }
+		local py_formatters_set = {}
+		for _, v in ipairs(py_formatters) do
+			py_formatters_set[v] = true
+		end
+
+		vim.api.nvim_create_user_command("PyFmt", function(inpt)
+			if py_formatters_set[inpt.args] then
+				conform.formatters_by_ft.python = { inpt.args }
+				print("Set python formatter as: " .. inpt.args)
+			else
+				print("Unknown formatter, recived: " .. inpt.args)
+			end
+		end, {
+			desc = "Set python formatter",
+			nargs = 1,
+			complete = function(_, _, _)
+				return py_formatters
+			end
+		})
+
 		conform.setup({
 			format_on_save = function()
 				-- Disable with a global variable
