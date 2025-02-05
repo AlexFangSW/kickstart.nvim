@@ -21,7 +21,7 @@ return {
 		})
 
 		-- set python formatter (default: yapf)
-		local py_formatters = { "yapf", "black" }
+		local py_formatters = { "yapf", "black", "ruff_format" }
 		local py_formatters_set = {}
 		for _, v in ipairs(py_formatters) do
 			py_formatters_set[v] = true
@@ -65,9 +65,7 @@ return {
 
 		-- customize yapf
 		conform.formatters.yapf = {
-			prepend_args = function(_, _)
-				return { "--style", "{based_on_style: google, indent_width: 4}" }
-			end,
+			prepend_args = { "--style", "{based_on_style: google, indent_width: 4}" }
 		}
 	end
 }
