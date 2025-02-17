@@ -59,7 +59,24 @@ local servers = {
     yamlls = {},
     lua_ls = {
         Lua = {
-            workspace = { checkThirdParty = false },
+            runtime = {
+                version = 'Lua 5.4',
+                path = {
+                    '?.lua',
+                    '?/init.lua',
+                    vim.fn.expand '~/.luarocks/share/lua/5.4/?.lua',
+                    vim.fn.expand '~/.luarocks/share/lua/5.4/?/init.lua',
+                    '/usr/share/5.4/?.lua',
+                    '/usr/share/lua/5.4/?/init.lua'
+                }
+            },
+            workspace = {
+                checkThirdParty = false,
+                library = {
+                    vim.fn.expand '~/.luarocks/share/lua/5.4',
+                    '/usr/share/lua/5.4'
+                }
+            },
             telemetry = { enable = false },
             -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
             -- diagnostics = { disable = { 'missing-fields' } },
