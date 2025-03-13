@@ -20,16 +20,21 @@ return {
 			desc = "Re-enable autoformat-on-save",
 		})
 
-		-- set python formatter (default: yapf)
-		local py_formatters = { "yapf", "black", "ruff_format" }
+		-- set python formatter (default: ruff_format)
+		local py_formatters = {
+			["yapf"] = { "yapf" },
+			["black"] = { "black" },
+			["ruff"] = { "ruff_fix", "ruff_organize_imports", "ruff_format" }
+		}
 		local py_formatters_set = {}
-		for _, v in ipairs(py_formatters) do
-			py_formatters_set[v] = true
+		for k, _ in pairs(py_formatters) do
+			table.insert(py_formatters_set, k)
 		end
 
 		vim.api.nvim_create_user_command("PyFmt", function(inpt)
-			if py_formatters_set[inpt.args] then
-				conform.formatters_by_ft.python = { inpt.args }
+			local formatter_setting = py_formatters[inpt.args]
+			if formatter_setting ~= nil then
+				conform.formatters_by_ft.python = formatter_setting
 				print("Set python formatter as: " .. inpt.args)
 			else
 				print("Unknown formatter, recived: " .. inpt.args)
@@ -38,7 +43,7 @@ return {
 			desc = "Set python formatter",
 			nargs = 1,
 			complete = function(_, _, _)
-				return py_formatters
+				return py_formatters_set
 			end
 		})
 
@@ -53,7 +58,7 @@ return {
 			formatters_by_ft = {
 				-- lua = { "stylua" },
 				-- Conform will run multiple formatters sequentially
-				python = { "yapf" }, -- need to pip install yapf
+				python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
 				-- Use a sub-list to run only the first available formatter
 				-- javascript = { { "prettierd", "prettier" } },
 				-- javascript = { "prettier" },
