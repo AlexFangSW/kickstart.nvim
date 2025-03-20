@@ -15,8 +15,13 @@ return {
 	{
 		'comfysage/evergarden',
 		opts = {
-			transparent_background = true,
-			variant = 'hard', -- 'hard'|'medium'|'soft'
+			theme = {
+				variant = 'fall',
+				accent = 'green',
+			},
+			editor = {
+				transparent_background = true,
+			}
 		},
 	},
 }

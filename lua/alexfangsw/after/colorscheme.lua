@@ -15,7 +15,7 @@ local function gruvbox()
 end
 
 local function evergarden()
-    local colors = require('evergarden.colors').colors()
+    local colors = require('evergarden.colors').fall
     colors.text = "#CACCBE"
     vim.cmd.colorscheme("evergarden")
 end
