@@ -67,7 +67,11 @@ return {
 				typescriptreact = { "prettierd" },
 				go = {
 					"gofmt", "goimports"
+				},
+				css = {
+					"css_beautify "
 				}
+
 			},
 		})
 
