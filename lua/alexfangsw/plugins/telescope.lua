@@ -37,16 +37,7 @@ return {
 					height = 0.99,
 					width = 0.99
 				},
-				file_ignore_patterns = {
-					".git/",
-					".venv/",
-					"venv/",
-					"env/",
-					"__pycache__",
-					".ruff_cache/",
-					".next/",
-					"node_modules/",
-				}
+				file_ignore_patterns = {}
 			},
 			pickers = {
 				find_files = { hidden = true, previewer = false },
@@ -87,8 +78,17 @@ return {
 
 		local function find_files_all()
 			require('telescope.builtin').find_files {
-				no_ignore = true,
-				hidden = true,
+				-- rg --files --color never --hidden --no-ignore --ignore-file ~/.config/nvim/.rgignore
+				find_command = {
+					"rg",
+					"--files",
+					"--color",
+					"never",
+					"--hidden",
+					"--no-ignore",
+					"--ignore-file",
+					"/home/alex/.config/nvim/.rgignore",
+				}
 			}
 		end
 
