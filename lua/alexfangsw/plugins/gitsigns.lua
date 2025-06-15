@@ -24,7 +24,20 @@ return {
 					opts.buffer = bufnr
 					vim.keymap.set(mode, l, r, opts)
 				end
+				-- Git blame
 				map('n', '<leader>gb', gs.toggle_current_line_blame)
+
+				-- Hunk related actions
+				map('n', '<leader>hs', gs.stage_hunk)
+				map('n', '<leader>hr', gs.reset_hunk)
+				map('n', '<leader>hi', gs.preview_hunk_inline)
+
+				map('v', '<leader>hs', function()
+					gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+				end)
+				map('v', '<leader>hr', function()
+					gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
+				end)
 			end
 		}
 	end
