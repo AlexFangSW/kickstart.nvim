@@ -2,6 +2,14 @@ return {
 	'sindrets/diffview.nvim',
 	config = function()
 		-- [[ Configure Diffview ]]
+		local actions = require("diffview.actions")
+
+		function gf_and_close()
+			-- close the diffview tab on gf
+			actions.goto_file_edit()
+			vim.cmd([[:tabclose #]])
+		end
+
 		require("diffview").setup({
 			diff_binaries = false, -- Show diffs for binaries
 			enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
@@ -18,6 +26,11 @@ return {
 				fold_closed = "",
 				fold_open = "",
 				done = "✓",
+			},
+			keymaps = {
+				view = {
+					{ "n", "gf", gf_and_close, { desc = "Open the file in the previous tabpage, and close diffview tab." } },
+				}
 			},
 			view = {
 				-- Configure the layout and behavior of different types of views.
