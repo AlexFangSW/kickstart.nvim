@@ -30,6 +30,12 @@ return {
 			keymaps = {
 				view = {
 					{ "n", "gf", gf_and_close, { desc = "Open the file in the previous tabpage, and close diffview tab." } },
+				},
+				file_panel = {
+					{ "n", "gf", gf_and_close, { desc = "Open the file in the previous tabpage, and close diffview tab." } },
+				},
+				file_history_panel = {
+					{ "n", "gf", gf_and_close, { desc = "Open the file in the previous tabpage, and close diffview tab." } },
 				}
 			},
 			view = {
