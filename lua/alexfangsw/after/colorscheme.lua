@@ -1,10 +1,6 @@
 local function zenbones()
     vim.opt.background = "dark"
     vim.cmd.colorscheme("zenbones")
-    -- colorcolumn and background color
-    vim.opt.termguicolors = true
-    vim.cmd("highlight ColorColumn guibg=#272725")
-    -- vim.cmd("highlight Normal guibg=#E0E0E0")
 end
 
 local function gruvbox()
@@ -20,6 +16,17 @@ local function evergarden()
     vim.cmd.colorscheme("evergarden")
 end
 
-gruvbox()
--- zenbones()
+local function transparent_background()
+    -- Transparent background
+    local transparent = require("transparent")
+    transparent.clear_prefix('BufferLine')
+    transparent.clear_prefix('NeoTree')
+    transparent.clear_prefix('lualine')
+    vim.cmd([[:TransparentEnable]])
+end
+
+-- gruvbox()
+zenbones()
 -- evergarden()
+
+transparent_background()
