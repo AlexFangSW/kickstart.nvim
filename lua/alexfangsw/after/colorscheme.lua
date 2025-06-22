@@ -10,10 +10,8 @@ local function gruvbox()
     vim.cmd.colorscheme("gruvbox-material")
 end
 
-local function evergarden()
-    local colors = require('evergarden.colors').fall
-    colors.text = "#CACCBE"
-    vim.cmd.colorscheme("evergarden")
+local function vague()
+    vim.cmd("colorscheme vague")
 end
 
 local function transparent_background()
@@ -26,12 +24,13 @@ local function transparent_background()
 end
 
 local function testing()
-    -- vim.cmd("colorscheme darkvoid")
+    -- vim.cmd("colorscheme newsprint")
 end
 
 testing()
-gruvbox()
+-- gruvbox()
 -- zenbones()
--- evergarden()
+vague()
+
 
 transparent_background()

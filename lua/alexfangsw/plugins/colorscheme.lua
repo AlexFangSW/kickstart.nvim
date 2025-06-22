@@ -13,15 +13,6 @@ return {
 		priority = 1000,
 	},
 	{
-		'comfysage/evergarden',
-		opts = {
-			theme = {
-				variant = 'fall',
-				accent = 'green',
-			},
-			editor = {
-				transparent_background = true,
-			}
-		},
+		"vague2k/vague.nvim"
 	},
 }
