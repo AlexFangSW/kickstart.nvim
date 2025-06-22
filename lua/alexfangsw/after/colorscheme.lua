@@ -25,8 +25,13 @@ local function transparent_background()
     vim.cmd([[:TransparentEnable]])
 end
 
--- gruvbox()
-zenbones()
+local function testing()
+    -- vim.cmd("colorscheme darkvoid")
+end
+
+testing()
+gruvbox()
+-- zenbones()
 -- evergarden()
 
 transparent_background()
