@@ -23,6 +23,16 @@ local function current_formatter()
 	return ''
 end
 
+local function correct_color()
+	if (vim.g.colors_name == 'vague') then
+		return { fg = '#C3C3D5FF' }
+	elseif (vim.g.colors_name == "gruvbox-material") then
+		return { fg = '#D2BD94FF' }
+	else
+		return nil
+	end
+end
+
 return {
 	-- Set lualine as statusline
 	'nvim-lualine/lualine.nvim',
@@ -35,7 +45,20 @@ return {
 			section_separators = '',
 		},
 		sections = {
+			lualine_a = {
+				{
+
+					"mode",
+					color = correct_color
+				}
+			},
 			lualine_x = { 'encoding', 'filetype', current_formatter },
+			lualine_z = {
+				{
+					"location",
+					color = correct_color,
+				}
+			},
 		},
 	},
 }
