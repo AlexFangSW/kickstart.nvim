@@ -97,7 +97,7 @@ end
 
 vim.api.nvim_create_user_command("PyRelative", relative_import, {})
 
-local activate_relative_import = true
+local activate_relative_import = false
 local function py_relative_toggle()
     activate_relative_import = not activate_relative_import
     if activate_relative_import then
