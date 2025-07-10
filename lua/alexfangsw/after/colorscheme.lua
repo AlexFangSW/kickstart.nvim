@@ -28,9 +28,9 @@ local function testing()
 end
 
 testing()
--- gruvbox()
+gruvbox()
 -- zenbones()
-vague()
+-- vague()
 
 
 transparent_background()
