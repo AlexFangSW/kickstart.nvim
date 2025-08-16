@@ -11,7 +11,7 @@ return {
 		'hrsh7th/cmp-path',
 
 		-- Adds a number of user-friendly snippets
-		'rafamadriz/friendly-snippets',
+		-- 'rafamadriz/friendly-snippets',
 
 		-- Show signature help in insert mode
 		"hrsh7th/cmp-nvim-lsp-signature-help",
