@@ -158,15 +158,6 @@ mason_lspconfig.setup_handlers {
     end,
 }
 
-local lspconfig = require('lspconfig')
-
-lspconfig.qmlls.setup({
-    cmd = { "qmlls" },
-    filetypes = { "qml", "qmljs" },
-    -- single_file_support is often needed for QML
-    single_file_support = true,
-})
-
 -- https://docs.astral.sh/ruff/editors/setup/#neovim
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
