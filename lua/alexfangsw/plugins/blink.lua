@@ -17,7 +17,7 @@ return {
 			-- 'super-tab' for tab to accept
 			-- 'enter' for enter to accept
 			-- 'none' for no mappings
-			preset = 'default',
+			preset = 'enter',
 		},
 
 		appearance = {
