@@ -2,8 +2,13 @@
 Based on **kickstart.nvim**, and gradually modified.
 
 ## Install 
+Place the config under `~/.config/nvim`
 ```
 git clone https://github.com/AlexFangSW/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+```
+Once you start `nvim` it should be using this config
+```
+nvim
 ```
 
 ## Multiple nvim configs
