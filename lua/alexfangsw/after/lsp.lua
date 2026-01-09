@@ -108,6 +108,10 @@ require('neodev').setup()
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
+-- Set consistent position encoding to avoid warnings when multiple LSPs attach to same buffer
+capabilities.general = capabilities.general or {}
+capabilities.general.positionEncodings = { "utf-16" }
+
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
