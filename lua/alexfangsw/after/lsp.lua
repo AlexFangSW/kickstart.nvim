@@ -98,7 +98,8 @@ local servers = {
             -- diagnostics = { disable = { 'missing-fields' } },
         },
     },
-    cssls = {}
+    cssls = {},
+    intelephense = {} -- php--
     -- eslint = {}
 }
 
